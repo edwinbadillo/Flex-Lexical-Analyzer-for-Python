@@ -1,0 +1,120 @@
+%option nounput yylineno
+%{
+	#include "values.h"
+%}
+
+
+
+%%
+
+[\t]		return TAB;		
+[\n]        	return NL;			
+" "			;
+["#"][0-9A-Za-z#$%=@!{},`~&*()<>?.:;_|^/+\t\r\n\[\]'-]+[\n]	;
+
+
+
+"and"		return KEYWORD;
+"assert"	return KEYWORD;
+"as"		return KEYWORD;
+"break"		return KEYWORD;
+"class"		return KEYWORD;
+"continue"	return KEYWORD;
+"def"		return KEYWORD;
+"del"		return KEYWORD;
+"elif"		return KEYWORD;
+"else"		return KEYWORD;
+"exec"		return KEYWORD;
+"except"	return KEYWORD;
+"finally"	return KEYWORD;
+"for"		return KEYWORD;
+"from"		return KEYWORD;
+"global"	return KEYWORD;
+"if"		return KEYWORD;
+"import"	return KEYWORD;
+"in"		return KEYWORD;
+"is"		return KEYWORD;
+"lambda"	return KEYWORD;
+"not"		return KEYWORD;
+"or"		return KEYWORD;
+"pass"		return KEYWORD;
+"print"		return KEYWORD;
+"raise"		return KEYWORD;
+"return"	return KEYWORD;
+"try"		return KEYWORD;
+"while"		return KEYWORD;
+"with"		return KEYWORD;
+"yield"		return KEYWORD;
+
+
+"=="		return OPERATOR;
+"!="		return OPERATOR;
+"<<"		return OPERATOR;
+">>"		return OPERATOR;
+"<="		return OPERATOR;
+">="		return OPERATOR;
+"<>"		return OPERATOR;
+[<]		return OPERATOR;
+[>]		return OPERATOR;
+[~]		return OPERATOR;
+[%]		return OPERATOR;
+[\^]		return OPERATOR;
+[|]		return OPERATOR;
+[&]		return OPERATOR;
+"//"		return OPERATOR;
+[/]		return OPERATOR;
+"**"		return OPERATOR;
+[*]		return OPERATOR;
+[-]		return OPERATOR;
+[+]		return OPERATOR;
+
+
+[=]		return DELIMETER;
+[,]		return DELIMETER;
+":"		return DELIMETER;
+"("         	return DELIMETER;
+")"		return DELIMETER;
+"["		return DELIMETER;
+"]"		return DELIMETER;
+"{"         	return DELIMETER;
+"}"		return DELIMETER;
+"@"		return DELIMETER;
+"'"		return DELIMETER;
+"."		return DELIMETER;
+"`"		return DELIMETER;
+";"		return DELIMETER;
+"+="		return DELIMETER;
+"-="		return DELIMETER;
+"**="		return DELIMETER;
+"*="		return DELIMETER;
+"//="		return DELIMETER;
+"/="		return DELIMETER;
+"%="		return DELIMETER;
+"&="		return DELIMETER;
+"|="		return DELIMETER;
+"^="		return DELIMETER;
+">>="		return DELIMETER;
+"<<="		return DELIMETER;
+
+
+[0-9]*[l|L]								return LITERAL;
+
+([a-fA-F0-9])*|([0]+)|([0-9a-fA-F]*)?					return LITERAL;
+
+\'[ 0-9A-Za-z#$%=@!{},`~&*()<>?.:;_|^/+\t\r\n\[\]"-]*\'			return LITERAL;
+
+["][0-9A-Za-z#$%=@!{},`~&*()<>?.:;_|^/+\t\r\n\[\]'-]*["]		return LITERAL;
+
+[0-9]+([.][0-9]+)?(("e"|"E")[+|-]?[0-9]+)?([+|-][0-9]*("j"|"J"))?	return LITERAL;
+
+
+[a-zA-Z]+[_]?[a-zA-Z0-9]*						return IDENTIFIER;
+
+
+%%
+
+int yywrap(void)
+{
+	return 1;
+}
+
